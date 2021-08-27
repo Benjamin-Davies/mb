@@ -22,3 +22,5 @@ add_executable(mb
 target_link_libraries(mb
   Boost::program_options
   )
+
+install(TARGETS mb)
