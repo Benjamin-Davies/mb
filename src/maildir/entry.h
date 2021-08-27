@@ -1,6 +1,11 @@
 #pragma once
 
+#include <cctype>
 #include <filesystem>
+#include <fstream>
+#include <unordered_map>
+
+#include "encodings.h"
 
 namespace fs = std::filesystem;
 
@@ -20,6 +25,8 @@ namespace maildir
   Flags parse_flags(const std::string &);
   std::string to_string(Flags);
 
+  typedef std::unordered_map<std::string, std::string> Headers;
+
   class Entry
   {
   public:
@@ -31,10 +38,23 @@ namespace maildir
 
     std::string flags_str();
 
+    Headers &headers();
+
+    std::string subject()
+    {
+      std::string subject = encodings::decode_word(headers()["Subject"]);
+      if (subject.empty())
+      {
+        return "(no subject)";
+      }
+      return subject;
+    }
+
   private:
     fs::path m_path;
     int m_uid;
     Flags m_flags;
+    Headers m_headers;
   };
 
 }

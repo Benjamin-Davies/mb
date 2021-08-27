@@ -56,4 +56,32 @@ namespace maildir
     return to_string(m_flags);
   }
 
+  Headers &Entry::headers()
+  {
+    if (!m_headers.empty())
+    {
+      return m_headers;
+    }
+
+    std::ifstream is(m_path);
+    std::string line, key, value;
+    while (getline(is, line) && !line.empty())
+    {
+      if (std::isspace(line[0]))
+      {
+        // TODO: remove leading whitespace
+        m_headers[key] += line;
+      }
+      else
+      {
+        size_t col_pos = line.find(':');
+        key = std::string(line.begin(), line.begin() + col_pos);
+        value = std::string(line.begin() + col_pos + 2, line.end());
+        m_headers[key] = value;
+      }
+    }
+
+    return m_headers;
+  }
+
 }

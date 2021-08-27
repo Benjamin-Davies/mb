@@ -10,12 +10,13 @@ find_package(Boost
   COMPONENTS program_options
   )
 
-include_directories(${Boost_INCLUDE_DIRS})
+include_directories(src ${Boost_INCLUDE_DIRS})
 
 add_executable(mb
   src/mb.cpp
   src/maildir/dir.cpp
   src/maildir/entry.cpp
+  src/encodings.cpp
   )
 
 target_link_libraries(mb

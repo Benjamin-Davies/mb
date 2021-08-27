@@ -70,8 +70,5 @@
     "typeinfo": "cpp",
     "valarray": "cpp",
     "variant": "cpp"
-  },
-  "cmake.debugConfig": {
-    "args": ["--maildir", "bentendavies@gmail.com/INBOX"]
   }
 }
