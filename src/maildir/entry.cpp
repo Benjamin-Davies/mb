@@ -51,7 +51,7 @@ namespace maildir
     m_flags = parse_flags(flags);
   }
 
-  std::string Entry::flags_str()
+  std::string Entry::flags_str() const
   {
     return to_string(m_flags);
   }

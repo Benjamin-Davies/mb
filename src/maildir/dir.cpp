@@ -47,34 +47,52 @@ namespace maildir
     return filename.size() > 0 && filename[0] == '.';
   }
 
-  std::vector<Entry> entries(const fs::path &dir)
+  void maildir_iterator::next()
   {
-    std::vector<Entry> entries;
+    if (m_state == Empty)
+      return;
 
-    auto iter_dir = [&entries, &dir](const char *sub_dir)
+    if (m_state == Initial)
     {
-      for (auto &file : fs::directory_iterator(dir / sub_dir))
+      m_dir = fs::directory_iterator(*m_path / "new");
+      m_state = ReadingNew;
+    }
+
+    if (dir_end())
+    {
+      if (m_state == ReadingNew)
       {
-        if (file.is_regular_file() && !is_hidden(file.path()))
+        m_dir = fs::directory_iterator(*m_path / "cur");
+        m_state = ReadingCur;
+
+        if (dir_end())
         {
-          Entry entry(file.path());
-          entries.push_back(entry);
+          set_empty();
+          return;
         }
       }
-    };
+      else
+      {
+        set_empty();
+        return;
+      }
+    }
 
-    iter_dir("new");
-    iter_dir("cur");
+    m_current = Entry((*m_dir)->path());
+    (*m_dir)++;
+  }
 
-    std::sort(
-        entries.begin(),
-        entries.end(),
-        [](Entry &a, Entry &b)
-        {
-          return a.uid() > b.uid();
-        });
+  bool maildir_iterator::dir_end() const
+  {
+    return *m_dir == fs::directory_iterator();
+  }
 
-    return entries;
+  void maildir_iterator::set_empty()
+  {
+    m_state = Empty;
+    m_path = std::nullopt;
+    m_dir = std::nullopt;
+    m_current = std::nullopt;
   }
 
 }

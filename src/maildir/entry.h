@@ -32,11 +32,11 @@ namespace maildir
   public:
     Entry(const fs::path &path);
 
-    fs::path &path() { return m_path; }
-    int uid() { return m_uid; }
-    Flags flags() { return m_flags; }
+    const fs::path &path() const { return m_path; }
+    int uid() const { return m_uid; }
+    Flags flags() const { return m_flags; }
 
-    std::string flags_str();
+    std::string flags_str() const;
 
     Headers &headers();
 
