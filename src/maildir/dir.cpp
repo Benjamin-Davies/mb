@@ -1,5 +1,7 @@
 #include "dir.h"
 
+#include <algorithm>
+
 namespace maildir
 {
 
@@ -63,6 +65,14 @@ namespace maildir
 
     iter_dir("new");
     iter_dir("cur");
+
+    std::sort(
+        entries.begin(),
+        entries.end(),
+        [](Entry &a, Entry &b)
+        {
+          return a.uid() > b.uid();
+        });
 
     return entries;
   }

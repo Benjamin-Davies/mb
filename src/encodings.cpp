@@ -2,9 +2,12 @@
 
 #include <cassert>
 
+#include <boost/algorithm/string.hpp>
+
 namespace encodings
 {
 
+  // See also: https://datatracker.ietf.org/doc/html/rfc1342
   std::string decode_word(const std::string &str)
   {
     if (str.size() < 8 || str[0] != '=' || str[1] != '?')
@@ -20,8 +23,11 @@ namespace encodings
     std::string encoding(str.begin() + divider_1 + 1, str.begin() + divider_2);
     std::string contents(str.begin() + divider_2 + 1, str.begin() + divider_3);
 
+    boost::to_upper(charset);
+    boost::to_upper(encoding);
+
     // TODO: these may have other values
-    assert(charset == "utf-8");
+    assert(charset == "UTF-8");
     assert(encoding == "Q");
     assert(str[divider_3 + 1] == '=');
 
