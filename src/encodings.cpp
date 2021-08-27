@@ -27,7 +27,7 @@ namespace encodings
     boost::to_upper(encoding);
 
     // TODO: these may have other values
-    assert(charset == "UTF-8");
+    assert(charset == "UTF-8" || charset == "US-ASCII");
     assert(encoding == "Q");
     assert(str[divider_3 + 1] == '=');
 

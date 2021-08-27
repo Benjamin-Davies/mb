@@ -3,6 +3,7 @@
 #include <cctype>
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <unordered_map>
 
 #include "encodings.h"
@@ -49,6 +50,8 @@ namespace maildir
       }
       return subject;
     }
+
+    void set_flags(Flags);
 
   private:
     fs::path m_path;

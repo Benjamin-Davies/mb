@@ -11,14 +11,22 @@ namespace maildir
   Flags parse_flags(const std::string &str)
   {
     int flags = NONE;
-    for (auto &c : str)
+    for (char c : str)
     {
+      c = std::toupper(c);
+      bool found;
       for (int i = 0; i < FLAG_COUNT; i++)
       {
         if (c == FLAGS[i])
         {
           flags |= 1 << i;
+          found = true;
+          break;
         }
+      }
+      if (!found)
+      {
+        std::cerr << "Encountered unknown flag: " << c << std::endl;
       }
     }
     return (Flags)flags;
@@ -82,6 +90,32 @@ namespace maildir
     }
 
     return m_headers;
+  }
+
+  void Entry::set_flags(Flags flags)
+  {
+    auto new_path = m_path.parent_path().parent_path();
+
+    if (flags & SEEN)
+      new_path /= "cur";
+    else
+      new_path /= "new";
+
+    // of the form "...,U=uid:2,flags"
+    std::string filename = m_path.filename();
+    size_t col_pos = filename.rfind(':');
+    auto flags_str = to_string(flags);
+    new_path /= filename.substr(0, col_pos) + ":2," + flags_str;
+
+    if (flags)
+      std::cerr << "New flags: " << flags_str << std::endl;
+    else
+      std::cerr << "New flags: (none)" << std::endl;
+
+    fs::rename(m_path, new_path);
+
+    m_flags = flags;
+    m_path = new_path;
   }
 
 }

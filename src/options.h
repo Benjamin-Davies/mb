@@ -11,5 +11,8 @@ struct Options
 {
   fs::path maildir;
   std::optional<int> uid;
+  std::optional<std::string> toggle;
+  std::optional<std::string> set;
+  std::optional<std::string> unset;
 };
 Options parse_options(int argc, const char *const *argv);
