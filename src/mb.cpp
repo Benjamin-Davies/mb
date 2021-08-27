@@ -29,7 +29,7 @@ int main(int argc, const char *const *argv)
       entry.set_flags((Flags)flags);
     }
 
-    std::cout << entry.path() << std::endl;
+    std::cout << std::string(entry.path()) << std::endl;
   }
   else
   {
