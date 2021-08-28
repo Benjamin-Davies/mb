@@ -14,6 +14,8 @@ Options parse_options(int argc, const char *const *argv)
   po::options_description desc("Allowed options");
   desc.add_options()
       ("help,h", "Print help message")
+      ("list,l", "List directories containing mail\n"
+                 "All other options are ignored")
       ("maildir,d", po::value<fs::path>()->default_value("INBOX"), "Directory containing mail")
       ("uid,u", po::value<int>(), "UID of email to edit/print path of")
       ("toggle,t", po::value<std::string>(), "Toggle the specified flags")
@@ -32,6 +34,7 @@ Options parse_options(int argc, const char *const *argv)
   }
 
   return {
+      .list = vm.count("list"),
       .maildir = vm["maildir"].as<fs::path>(),
       .uid = get_optional<int>(vm, "uid"),
       .toggle = get_optional<std::string>(vm, "toggle"),

@@ -9,6 +9,7 @@ namespace po = boost::program_options;
 
 struct Options
 {
+  bool list;
   fs::path maildir;
   std::optional<int> uid;
   std::optional<std::string> toggle;

@@ -7,3 +7,5 @@
 
 #include "options.h"
 #include "maildir/dir.h"
+
+void list_maildirs(const fs::path &base, const fs::path &path = "");

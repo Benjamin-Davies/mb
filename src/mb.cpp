@@ -6,8 +6,14 @@ int main(int argc, const char *const *argv)
 {
   auto opts = parse_options(argc, argv);
 
-  maildir::resolve(opts.maildir);
+  if (opts.list)
+  {
+    auto dir = maildir::locate();
+    list_maildirs(dir);
+    return 0;
+  }
 
+  maildir::resolve(opts.maildir);
   auto iter = maildir_iterator(opts.maildir);
 
   if (opts.uid.has_value())
@@ -48,6 +54,23 @@ int main(int argc, const char *const *argv)
       std::cout << entry.uid() << "\t"
                 << entry.flags_str() << "\t"
                 << entry.subject() << std::endl;
+    }
+  }
+}
+
+void list_maildirs(const fs::path &base, const fs::path &path)
+{
+  if (is_maildir(base / path))
+  {
+    std::cout << std::string(path) << std::endl;
+    return;
+  }
+
+  for (auto &subdir : fs::directory_iterator(base / path))
+  {
+    if (subdir.is_directory())
+    {
+      list_maildirs(base, path / subdir.path().filename());
     }
   }
 }
