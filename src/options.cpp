@@ -29,7 +29,9 @@ Options parse_options(int argc, const char *const *argv)
 
   if (vm.count("help"))
   {
-    std::cerr << desc << std::endl;
+    std::cerr << "mb - a simple mailbox utility" << std::endl
+              << std::endl
+              << desc << std::endl;
     std::exit(0);
   }
 
