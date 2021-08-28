@@ -52,6 +52,12 @@ namespace maildir
     size_t col_pos = filename.rfind(':');
     size_t eq_pos = filename.rfind('=', col_pos);
 
+    if (col_pos == -1)
+    {
+      col_pos = filename.length();
+      filename += ":2,";
+    }
+
     std::string uid(filename.begin() + eq_pos + 1, filename.begin() + col_pos);
     m_uid = std::stoi(uid);
 

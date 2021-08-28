@@ -73,6 +73,6 @@
   },
   "cmake.configureOnOpen": true,
   "cmake.debugConfig": {
-    "args": ["--uid", "100"]
+    // "args": ["--uid", "100"]
   }
 }
