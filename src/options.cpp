@@ -34,7 +34,7 @@ Options parse_options(int argc, const char *const *argv)
   }
 
   return {
-      .list = vm.count("list"),
+      .list = vm.count("list") > 0,
       .maildir = vm["maildir"].as<fs::path>(),
       .uid = get_optional<int>(vm, "uid"),
       .toggle = get_optional<std::string>(vm, "toggle"),
