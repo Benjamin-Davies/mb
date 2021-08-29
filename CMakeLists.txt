@@ -25,4 +25,4 @@ target_link_libraries(mb
   )
 
 install(TARGETS mb)
-install(FILES mb.1 DESTINATION share/man/man1/)
+install(FILES mb.1 DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man1)
