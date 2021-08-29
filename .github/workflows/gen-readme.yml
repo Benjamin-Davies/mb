@@ -1,0 +1,25 @@
+name: Generate README
+
+on:
+  push:
+    branches: [ master ]
+    paths: 
+      - mb.1
+      - .github
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Generate README
+        run: echo TESTING > README
+      
+      - uses: EndBug/add-and-commit@v4
+        with:
+          add: README
+          message: Auto generate README
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
