@@ -25,3 +25,4 @@ target_link_libraries(mb
   )
 
 install(TARGETS mb)
+install(FILES mb.1 DESTINATION share/man/man1/)
