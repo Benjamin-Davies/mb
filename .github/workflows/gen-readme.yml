@@ -5,7 +5,7 @@ on:
     branches: [ master ]
     paths: 
       - mb.1
-      - .github
+      - .github/**
 
 jobs:
   generate:
