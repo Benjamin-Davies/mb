@@ -97,6 +97,11 @@ DIRECTORY STRUCTURE
        S   Seen
        T   Trash
 
+SEE ALSO
+       mbsync(1), maildir(5)
+
+       Source code available at https://github.com/Benjamin-Davies/mb.
+
 AUTHOR
        mb  was  written by Benjamin Davies <bentendavies@gmail.com> and is li‐
        censed under GPLv3.0.
