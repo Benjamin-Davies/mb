@@ -1,1 +1,113 @@
-TESTING
+MB(1)                            User Manuals                            MB(1)
+
+
+
+NNAAMMEE
+       mb - a simple mailbox utility
+
+
+SSYYNNOOPPSSIISS
+       mmbb ----hheellpp
+       mmbb ----lliisstt
+       mmbb [----mmaaiillddiirr _d_i_r]
+       mmbb [----mmaaiillddiirr _d_i_r] ----uuiidd _u_i_d
+       mmbb  [----mmaaiillddiirr  _d_i_r]  ----uuiidd _u_i_d [----ttooggggllee _f_l_a_g_s] [----sseett _f_l_a_g_s] [----uunnsseett
+       _f_l_a_g_s]
+
+
+DDEESSCCRRIIPPTTIIOONN
+       mmbb is a simple utility for basic  operations  on  mail  stored  in  the
+       mmaaiillddiirr  format. It is intended to be used in scripts, but it should be
+       useable by itself.
+
+       The program has five main modes of operation, corresponding to the five
+       lines in the SSYYNNOOPPSSIISS above:
+         * Show help message and exit
+         * List directories which may contain mail
+         * Tabulate mail in the specified directory
+         * Print the path of an message
+         * Modify the flags of an message and print the new path
+
+
+OOPPTTIIOONNSS
+       --hh, ----hheellpp          Show help message and exit.
+
+       --ll, ----lliisstt          List  sub-directories  (recursive) of the MMAAIILL RROOOOTT
+                           that follow the MMAAIILLDDIIRR SSTTRRUUCCTTUURREE.
+
+       --dd _d_i_r, ----mmaaiillddiirr==_d_i_r
+                           Look for mail in _d_i_r. If not specified, defaults to
+                           _I_N_B_O_X. Can be either: an absolute path, a path rel-
+                           ative to the current directory, or a path  relative
+                           to the MMAAIILL RROOOOTT.
+
+       --uu _u_i_d, ----uuiidd==_u_i_d   Look  for  an  message with the following _u_i_d.  See
+                           also: FFIILLEENNAAMMEESS.
+
+       --tt _f_l_a_g_s, ----ttooggggllee==_f_l_a_g_s
+                           Toggle the following flags on  the  specified  mes-
+                           sage.  See also: FFLLAAGGSS.
+
+       --ff _f_l_a_g_s, ----sseett==_f_l_a_g_s
+                           Set  the  following flags on the specified message.
+                           See also: FFLLAAGGSS.
+
+       --FF _f_l_a_g_s, ----uunnsseett==_f_l_a_g_s
+                           Unset the following flags on the specified message.
+                           See also: FFLLAAGGSS.
+
+
+DDIIRREECCTTOORRYY SSTTRRUUCCTTUURREE
+       mmbb assumes the following directory structure:
+
+
+   MMAAIILL RROOOOTT
+       Directories may be specified as relative to the MMAAIILL RROOOOTT.  To find the
+       MMAAIILL RROOOOTT, mmbb tries the following:
+         * _~_/_._l_o_c_a_l_/_s_h_a_r_e_/_m_a_i_l_/
+         * _~_/_m_a_i_l_/
+         * _~_/_M_a_i_l_/
+
+
+   MMAAIILLDDIIRR SSTTRRUUCCTTUURREE
+       Directories containing mail are expected to contain the following  sub-
+       directories.  Each message is stored in a separate file in one of these
+       sub-directories.
+
+
+       tab (@); l lx.  _t_m_p_/@T{ Contains email as it is being  downloaded.  Ig-
+       nored  but  still required.  T} _n_e_w_/@T{ Contains email that has not yet
+       been seen. None of these should have the SS flag.  T}  _c_u_r_/@T{  Contains
+       email that has been seen. All of these should have the SS flag.  T}
+
+
+   FFIILLEENNAAMMEESS
+       Files are expected to be named according to the following format
+
+       _u_n_i_q_u_e_-_n_a_m_e,,UU==_u_i_d::22,,_f_l_a_g_s
+
+       Where  _u_n_i_q_u_e_-_n_a_m_e is ignored, _u_i_d is a positive integer that is unique
+       to each message in the MMAAIILLDDIIRR, and _f_l_a_g_s is a (possibly empty)  string
+       where each character specifies a flag.  (see below)
+
+       Although  the  MMAAIILLDDIIRR  spec allows for a wider variety of filenames, I
+       have chosen to expect a format like that used by  mmbbssyynncc  in  order  to
+       simplify refering to specific messages.
+
+
+   FFLLAAGGSS
+       The  table below lists the recognised flags. Any flags not on this list
+       are ignored and may be deleted. As flags are  stored  as  part  of  the
+       filename, changing the flags for a message also changes the filename.
+
+
+       tab (@); l lx.  DD@Draft FF@Flagged RR@Replied SS@Seen TT@Trash
+
+
+AAUUTTHHOORR
+       mmbb  was  written by Benjamin Davies <bentendavies@gmail.com> and is li-
+       censed under GPLv3.0.
+
+
+
+mb 0.1                            2020-08-29                             MB(1)
