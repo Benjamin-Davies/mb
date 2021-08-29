@@ -1,4 +1,4 @@
-name: Generate README
+name: Generate README from manual
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Generate README
-        run: echo TESTING > README
+        run: groff -man -Tascii mb.1 > README
       
       - uses: EndBug/add-and-commit@v4
         with:
