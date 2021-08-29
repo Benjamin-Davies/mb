@@ -1,0 +1,143 @@
+.\" Process this file with
+.\" groff -man -Tascii mb.1
+.\"
+.TH MB 1 "2020-08-29" "mb 0.1" "User Manuals"
+
+.SH NAME
+mb \- a simple mailbox utility
+
+.SH SYNOPSIS
+.\" help
+.B mb --help
+.br
+.\" list
+.B mb --list
+.br
+.\" just dir
+.B mb
+[\fB--maildir\fI dir\fR]
+.br
+.\" dir and uid
+.B mb
+[\fB--maildir\fI dir\fR]
+\fB--uid\fI uid\fR
+.br
+.\" dir, uid and flags
+.B mb
+[\fB--maildir\fI dir\fR]
+\fB--uid\fI uid\fR
+[\fB--toggle\fI flags\fR]
+[\fB--set\fI flags\fR]
+[\fB--unset\fI flags\fR]
+
+.SH DESCRIPTION
+.B mb
+is a simple utility for basic operations on mail stored in the
+.B maildir
+format. It is intended to be used in scripts, but it should be useable
+by itself.
+
+The program has five main modes of operation, corresponding to the
+five lines in the
+.B SYNOPSIS
+above:
+  * Show help message and exit
+  * List directories which may contain mail
+  * Tabulate mail in the specified directory
+  * Print the path of an message
+  * Modify the flags of an message and print the new path
+
+.SH OPTIONS
+.TP 20
+.BR \-h ", " \-\^\-help
+Show help message and exit.
+.TP
+.BR \-l ", " \-\^\-list
+List sub-directories (recursive) of the \fBMAIL ROOT\fR that follow
+the \fBMAILDIR STRUCTURE\fR.
+.TP
+.BI \-d " dir" "\fR,\fP \-\^\-maildir=" dir
+Look for mail in \fIdir\fR. If not specified, defaults to
+\fIINBOX\fR. Can be either: an absolute path, a path relative to the
+current directory, or a path relative to the \fBMAIL ROOT\fR.
+.TP
+.BI \-u " uid" "\fR,\fP \-\^\-uid=" uid
+Look for an message with the following \fIuid\fR.
+See also:
+\fBFILENAMES\fR.
+.TP
+.BI \-t " flags" "\fR,\fP \-\^\-toggle=" flags
+Toggle the following flags on the specified message.
+See also: \fBFLAGS\fR.
+.TP
+.BI \-f " flags" "\fR,\fP \-\^\-set=" flags
+Set the following flags on the specified message.
+See also: \fBFLAGS\fR.
+.TP
+.BI \-F " flags" "\fR,\fP \-\^\-unset=" flags
+Unset the following flags on the specified message.
+See also: \fBFLAGS\fR.
+
+.SH DIRECTORY STRUCTURE
+\fBmb\fR assumes the following directory structure:
+
+.SS MAIL ROOT
+Directories may be specified as relative to the \fBMAIL ROOT\fR.
+To find the \fBMAIL ROOT\fR, \fBmb\fR tries the following:
+  * \fI~/.local/share/mail/\fR
+  * \fI~/mail/\fR
+  * \fI~/Mail/\fR
+
+.SS MAILDIR STRUCTURE
+Directories containing mail are expected to contain the
+following sub-directories. Each message is stored in a separate file
+in one of these sub-directories.
+
+.TS
+tab (@);
+l lx.
+\fItmp/\fR@T{
+Contains email as it is being downloaded. Ignored but still required.
+T}
+\fInew/\fR@T{
+Contains email that has not yet been seen. None of these should have the
+\fBS\fR\~flag.
+T}
+\fIcur/\fR@T{
+Contains email that has been seen. All of these should have the
+\fBS\fR\~flag.
+T}
+.TE
+
+.SS FILENAMES
+Files are expected to be named according to the following format
+
+.IB unique-name ",U=" uid ":2," flags
+
+Where \fIunique-name\fR is ignored, \fIuid\fR is a positive integer
+that is unique to each message in the \fBMAILDIR\fR, and \fIflags\fR
+is a (possibly empty) string where each character specifies a flag.
+(see below)
+
+Although the \fBMAILDIR\fR spec allows for a wider variety of
+filenames, I have chosen to expect a format like that used by
+\fBmbsync\fR in order to simplify refering to specific messages.
+
+.SS FLAGS
+The table below lists the recognised flags. Any flags not on this list
+are ignored and may be deleted. As flags are stored as part of the
+filename, changing the flags for a message also changes the filename.
+
+.TS
+tab (@);
+l lx.
+\fBD\fR@Draft
+\fBF\fR@Flagged
+\fBR\fR@Replied
+\fBS\fR@Seen
+\fBT\fR@Trash
+.TE
+
+.SH AUTHOR
+\fBmb\fR was written by Benjamin Davies <bentendavies@gmail.com>
+and is licensed under GPLv3.0.
