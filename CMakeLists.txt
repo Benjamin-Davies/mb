@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 find_package(Boost
   REQUIRED
-  COMPONENTS program_options
+  COMPONENTS program_options serialization
   )
 
 include_directories(src ${Boost_INCLUDE_DIRS})

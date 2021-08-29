@@ -83,14 +83,22 @@ namespace maildir
     {
       if (std::isspace(line[0]))
       {
-        // TODO: remove leading whitespace
-        m_headers[key] += line;
+        auto value_start = line.begin();
+        while (value_start != line.end() && std::isspace(*value_start))
+          value_start++;
+        value += std::string(value_start, line.end());
+        m_headers[key] = value;
       }
       else
       {
         size_t col_pos = line.find(':');
         key = std::string(line.begin(), line.begin() + col_pos);
-        value = std::string(line.begin() + col_pos + 2, line.end());
+
+        auto value_start = line.begin() + col_pos + 1;
+        while (value_start != line.end() && std::isspace(*value_start))
+          value_start++;
+        value = std::string(value_start, line.end());
+
         m_headers[key] = value;
       }
     }
