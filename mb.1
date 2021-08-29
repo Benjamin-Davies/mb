@@ -4,7 +4,7 @@
 .TH MB 1 "2020-08-29" "mb 0.1" "User Manuals"
 
 .SH NAME
-mb \- a simple mailbox utility
+mb - a simple mailbox utility
 
 .SH SYNOPSIS
 .\" help
@@ -43,38 +43,38 @@ five lines in the
 above:
   * Show help message and exit
   * List directories which may contain mail
-  * Tabulate mail in the specified directory
+  * Tabulate mail from the specified directory
   * Print the path of an message
   * Modify the flags of an message and print the new path
 
 .SH OPTIONS
 .TP 20
-.BR \-h ", " \-\^\-help
+.BR -h ", " --help
 Show help message and exit.
 .TP
-.BR \-l ", " \-\^\-list
+.BR -l ", " --list
 List sub-directories (recursive) of the \fBMAIL ROOT\fR that follow
 the \fBMAILDIR STRUCTURE\fR.
 .TP
-.BI \-d " dir" "\fR,\fP \-\^\-maildir=" dir
+.BI -d " dir" "\fR,\fP --maildir " dir
 Look for mail in \fIdir\fR. If not specified, defaults to
 \fIINBOX\fR. Can be either: an absolute path, a path relative to the
 current directory, or a path relative to the \fBMAIL ROOT\fR.
 .TP
-.BI \-u " uid" "\fR,\fP \-\^\-uid=" uid
+.BI -u " uid" "\fR,\fP --uid " uid
 Look for an message with the following \fIuid\fR.
 See also:
 \fBFILENAMES\fR.
 .TP
-.BI \-t " flags" "\fR,\fP \-\^\-toggle=" flags
+.BI -t " flags" "\fR,\fP --toggle " flags
 Toggle the following flags on the specified message.
 See also: \fBFLAGS\fR.
 .TP
-.BI \-f " flags" "\fR,\fP \-\^\-set=" flags
+.BI -f " flags" "\fR,\fP --set " flags
 Set the following flags on the specified message.
 See also: \fBFLAGS\fR.
 .TP
-.BI \-F " flags" "\fR,\fP \-\^\-unset=" flags
+.BI -F " flags" "\fR,\fP --unset " flags
 Unset the following flags on the specified message.
 See also: \fBFLAGS\fR.
 
