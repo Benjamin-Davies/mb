@@ -16,6 +16,10 @@ namespace encodings
 
     while (pos < str.size())
     {
+      pos = str.find('=', pos);
+      if (pos == std::string::npos)
+        break;
+
       size_t divider_1 = str.find('?', pos + 2);
       size_t divider_2 = str.find('?', divider_1 + 1);
       size_t divider_3 = str.find('?', divider_2 + 1);

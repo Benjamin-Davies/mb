@@ -74,6 +74,6 @@
   "cmake.configureOnOpen": true,
   "cmake.debugConfig": {
     // "args": ["--uid", "100"]
-    "args": ["--maildir", "bentendavies@gmail.com/[Gmail]/Sent Mail"]
+    // "args": ["--maildir", "bentendavies@gmail.com/[Gmail]/Sent Mail"]
   }
 }
